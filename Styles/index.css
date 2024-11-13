@@ -1,0 +1,50 @@
+/* Header */
+header{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+header h2{
+  color: var(--primary-clr-font);
+}
+
+/* Section */
+section{
+  display: grid;
+  grid-template-columns: auto auto auto ;
+  column-gap: var(--gap);
+  row-gap: var(--gap);
+}
+
+section div{
+  width: 30vw;
+  margin: auto;
+  position: relative;
+}
+
+img{
+  object-fit: contain;
+  width: 100%;
+  z-index: -1;
+}
+
+section div h1{
+  position: absolute;
+  z-index: 1;
+  bottom: 3.5rem;
+  left: 1rem;
+}
+
+section div p{
+  position: absolute;
+  z-index: 1;
+  bottom: 2rem;
+  left: 1rem;
+}
+
+section div h1, section div p{
+  font-weight: bold;
+}
+
