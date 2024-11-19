@@ -4,23 +4,34 @@ header{
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 100%;
+}
+
+header h1{
+  font-size: 200%;
+  text-align: center;
 }
 
 header h2{
+  font-size: 150%;
   color: var(--primary-clr-font);
+  text-align: center;
 }
 
 /* Section */
 section{
+  width: 100%;
   display: grid;
-  grid-template-columns: auto auto auto ;
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 35rem));
   column-gap: var(--gap);
   row-gap: var(--gap);
+  justify-content: center;
 }
 
 section div{
-  width: 30vw;
+  max-width: 100%;
   margin: auto;
+  padding: auto;
   position: relative;
 }
 
@@ -33,18 +44,36 @@ img{
 section div h1{
   position: absolute;
   z-index: 1;
-  bottom: 3.5rem;
-  left: 1rem;
+  bottom: 20%;
+  left: 5%;
+  font-size: 125%;
+  font-weight: bold;
+  margin: auto;
+  padding: auto;
 }
 
 section div p{
   position: absolute;
   z-index: 1;
-  bottom: 2rem;
-  left: 1rem;
+  bottom: 10%;
+  left:5%;
+  font-size: 90%;
+  font-weight: bold;
+  margin: auto;
+  padding: auto;
 }
 
-section div h1, section div p{
-  font-weight: bold;
+@media screen and (max-width: 450px) {
+  section div h1{
+    bottom: 27%;
+    left: 4%;
+    font-size: 100%;
+  }
+  section div p{
+    bottom: 10%;
+    left: 4%;
+    font-size: 70%;
+  }
 }
+
 
