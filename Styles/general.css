@@ -3,10 +3,6 @@
   --primary-clr-font: rgb(255, 255, 255);
   --heading-clr: rgb(174, 68, 90);
   --btn-clr: rgb(232, 188, 185);
-  --margin-text: 0.5rem;
-  --padding-text: 0.5rem;
-  --margin-divs: 1rem;
-  --gap: 1rem;
 }
 
 body{
@@ -20,14 +16,10 @@ a{
 
 h1,h2,h3,h4,h5,h6{
   color: var(--heading-clr);
-  padding: var(--padding-text);
-  margin: var(--margin-text);
 }
 
 p{
   color: var(--primary-clr-font);
-  padding: var(--padding-text);
-  margin: var(--margin-text);
 }
 
 button{

@@ -18,21 +18,23 @@ header h2{
   text-align: center;
 }
 
-/* Section */
-section{
+/* main */
+main{
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(10rem, 35rem));
-  column-gap: var(--gap);
-  row-gap: var(--gap);
+  grid-template-columns: 
+    repeat(auto-fit, minmax(10rem, 35rem));
+  column-gap: 1vw;
+  row-gap: 1vw;
   justify-content: center;
 }
 
-section div{
+main div{
   max-width: 100%;
   margin: auto;
   padding: auto;
   position: relative;
+  cursor: pointer;
 }
 
 img{
@@ -41,7 +43,7 @@ img{
   z-index: -1;
 }
 
-section div h1{
+main div h1{
   position: absolute;
   z-index: 1;
   bottom: 20%;
@@ -52,7 +54,7 @@ section div h1{
   padding: auto;
 }
 
-section div p{
+main div p{
   position: absolute;
   z-index: 1;
   bottom: 10%;
@@ -63,13 +65,13 @@ section div p{
   padding: auto;
 }
 
-@media screen and (max-width: 450px) {
-  section div h1{
+@media screen and (max-width: 460px) {
+  main div h1{
     bottom: 27%;
     left: 4%;
     font-size: 100%;
   }
-  section div p{
+  main div p{
     bottom: 10%;
     left: 4%;
     font-size: 70%;
