@@ -1,7 +1,7 @@
 :root{
   --bg-clr: rgb(67 , 46, 84);
   --primary-clr-font: rgb(255, 255, 255);
-  --heading-clr: rgb(174, 68, 90);
+  --secondary-clr-font: rgb(174, 68, 90);
   --btn-clr: rgb(232, 188, 185);
 }
 
@@ -15,7 +15,7 @@ a{
 }
 
 h1,h2,h3,h4,h5,h6{
-  color: var(--heading-clr);
+  color: var(--secondary-clr-font);
 }
 
 p{
@@ -24,4 +24,9 @@ p{
 
 button{
   color: var(--btn-clr);
+  background-color: var(--secondary-clr-font);
+  border: none;
+  border-radius: 7px;
+  font-weight: bold;
+  cursor: pointer;
 }
