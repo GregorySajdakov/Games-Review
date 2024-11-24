@@ -72,9 +72,20 @@ section button{
   height: 2rem;
 }
 
+.comments div{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
 .comments h3,
 .comments p {
   margin-bottom: 0;
+  margin-top: 0;
 }
 
 /* Responsiveness */
