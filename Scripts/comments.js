@@ -9,6 +9,15 @@ let comments = [];
 
 // Functions
 
+function checkInputs() {
+  if(userName.value === '' || userComment.value === '') {
+    alert('Please fill out both inputs :)');
+    return false;
+  } else{
+    return true;
+  }
+}
+
 function addDataToArray() {
   const user = userName.value;
   const comment = userComment.value;
@@ -16,10 +25,11 @@ function addDataToArray() {
   comments.unshift({
     user,
     comment
-  })
-}
+  });
+};
 
 function renderComment() {
+
   commentsContainer.innerHTML = '';
 
   comments.forEach((comment, index) => {
@@ -40,20 +50,18 @@ function renderComment() {
 };
 
 buttonAddComment.addEventListener('click', () => {
+  if (!checkInputs()) return;
+
   addDataToArray();
   renderComment();
-
-  console.log(comments);
 })
 
 function deleteComment() {
-  const button = event.target
+  const button = event.target;
   const index = button.getAttribute('data-index');
 
   comments.splice(index, 1);
   renderComment();
-
-  console.log(comments);
 }
 
 
