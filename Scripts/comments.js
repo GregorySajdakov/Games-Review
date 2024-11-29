@@ -9,23 +9,51 @@ let comments = [];
 
 // Functions
 
-function addCommentToArray(comment) {
-  comments += comment; 
+function addDataToArray() {
+  const user = userName.value;
+  const comment = userComment.value;
+
+  comments.unshift({
+    user,
+    comment
+  })
 }
 
+function renderComment() {
+  commentsContainer.innerHTML = '';
+
+  comments.forEach((comment, index) => {
+    const html = `
+    <div>
+      <h3>${comment.user}</h3>
+      <button data-index="${index}" class="js-delete">Delete</button>
+    </div>    
+    <p>${comment.comment}</p>
+    `;
+
+    commentsContainer.innerHTML += html;
+  });
+
+  document.querySelectorAll('.js-delete').forEach(button => {
+    button.addEventListener('click', deleteComment);
+  });
+};
+
 buttonAddComment.addEventListener('click', () => {
-  htmlComment = `
-      <div>
-        <h3>${userName.value}</h3>
-        <button class="js-delete">Delete</button>
-      </div>    
-      <p>${userComment.value}</p>
-  `;
-
-  addCommentToArray(htmlComment);
-
-  commentsContainer.innerHTML = comments;
+  addDataToArray();
+  renderComment();
 
   console.log(comments);
 })
+
+function deleteComment() {
+  const button = event.target
+  const index = button.getAttribute('data-index');
+
+  comments.splice(index, 1);
+  renderComment();
+
+  console.log(comments);
+}
+
 
