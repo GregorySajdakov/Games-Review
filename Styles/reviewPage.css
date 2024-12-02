@@ -78,13 +78,13 @@ section button{
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  margin-top: 1rem;
-  margin-bottom: 1rem;
+  margin-top: 2em;
+  margin-bottom: 1em;
 }
 
 .comments h3,
 .comments p {
-  margin-bottom: 0;
+  margin-bottom: 2em;
   margin-top: 0;
 }
 

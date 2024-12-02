@@ -5,9 +5,33 @@ const userComment = document.querySelector('.js-comment');
 const commentsContainer = document.querySelector('.js-comments');
 
 // Array
-let comments = [];
+let comments = JSON.parse(localStorage.getItem('comments'));
+
+if (comments === null) {
+  comments = [];
+}
+
+renderExistingComments();
 
 // Functions
+
+function renderExistingComments() {
+  comments.forEach((comment, index) => {
+    const html = `
+    <div>
+      <h3>${comment.user}</h3>
+      <button data-index="${index}" class="js-delete">Delete</button>
+    </div>    
+    <p>${comment.comment}</p>
+    `;
+
+    commentsContainer.innerHTML += html;
+  });
+
+  document.querySelectorAll('.js-delete').forEach(button => {
+    button.addEventListener('click', deleteComment);
+  });
+}
 
 function checkInputs() {
   if(userName.value === '' || userComment.value === '') {
@@ -26,6 +50,8 @@ function addDataToArray() {
     user,
     comment
   });
+
+  localStorage.setItem('comments', JSON.stringify(comments));
 };
 
 function renderComment() {
@@ -53,6 +79,8 @@ buttonAddComment.addEventListener('click', () => {
   if (!checkInputs()) return;
 
   addDataToArray();
+  userName.value = '';
+  userComment.value = '';
   renderComment();
 })
 
@@ -61,6 +89,7 @@ function deleteComment() {
   const index = button.getAttribute('data-index');
 
   comments.splice(index, 1);
+  localStorage.setItem('comments', JSON.stringify(comments));
   renderComment();
 }
 
