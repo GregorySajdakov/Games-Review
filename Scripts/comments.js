@@ -4,8 +4,11 @@ const userName = document.querySelector('.js-username');
 const userComment = document.querySelector('.js-comment');
 const commentsContainer = document.querySelector('.js-comments');
 
+// Unique ID for each page
+const reviewID = `comments-${window.location.pathname}`;
+
 // Main Array
-let comments = JSON.parse(localStorage.getItem('comments'));
+let comments = JSON.parse(localStorage.getItem(reviewID));
 
 // If localStorage is empty make empty array for it
 if (comments === null) {
@@ -49,7 +52,7 @@ function addDataToArray() {
     comment
   });
 
-  localStorage.setItem('comments', JSON.stringify(comments));
+  localStorage.setItem(reviewID, JSON.stringify(comments));
 };
 
 // Renders Comments
@@ -92,6 +95,6 @@ commentsContainer.addEventListener('click', (event) => {
 // Deleting Comments
 function deleteComment(index) {
   comments.splice(index, 1);
-  localStorage.setItem('comments', JSON.stringify(comments));
+  localStorage.setItem(reviewID, JSON.stringify(comments));
   renderComment();
 };
