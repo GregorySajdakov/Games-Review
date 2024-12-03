@@ -4,17 +4,17 @@ const userName = document.querySelector('.js-username');
 const userComment = document.querySelector('.js-comment');
 const commentsContainer = document.querySelector('.js-comments');
 
-// Array
+// Main Array
 let comments = JSON.parse(localStorage.getItem('comments'));
 
+// If localStorage is empty make empty array for it
 if (comments === null) {
   comments = [];
 }
 
 renderExistingComments();
 
-// Functions
-
+// Render existing comments
 function renderExistingComments() {
   comments.forEach((comment, index) => {
     const html = `
@@ -27,12 +27,9 @@ function renderExistingComments() {
 
     commentsContainer.innerHTML += html;
   });
-
-  document.querySelectorAll('.js-delete').forEach(button => {
-    button.addEventListener('click', deleteComment);
-  });
 }
 
+// Checking inputs
 function checkInputs() {
   if(userName.value === '' || userComment.value === '') {
     alert('Please fill out both inputs :)');
@@ -42,6 +39,7 @@ function checkInputs() {
   }
 }
 
+// Adds inputs to array
 function addDataToArray() {
   const user = userName.value;
   const comment = userComment.value;
@@ -54,6 +52,7 @@ function addDataToArray() {
   localStorage.setItem('comments', JSON.stringify(comments));
 };
 
+// Renders Comments
 function renderComment() {
 
   commentsContainer.innerHTML = '';
@@ -69,28 +68,30 @@ function renderComment() {
 
     commentsContainer.innerHTML += html;
   });
-
-  document.querySelectorAll('.js-delete').forEach(button => {
-    button.addEventListener('click', deleteComment);
-  });
 };
 
+// Button for adding comments
 buttonAddComment.addEventListener('click', () => {
   if (!checkInputs()) return;
 
   addDataToArray();
+  // Clear Inputs after adding it's value to an array
   userName.value = '';
   userComment.value = '';
   renderComment();
 })
 
-function deleteComment() {
-  const button = event.target;
-  const index = button.getAttribute('data-index');
+// Buttons for deleting comments
+commentsContainer.addEventListener('click', (event) => {
+  if(event.target.classList.contains('js-delete')) {
+    const index = event.target.dataset.index;
+    deleteComment(index);
+  };
+});
 
+// Deleting Comments
+function deleteComment(index) {
   comments.splice(index, 1);
   localStorage.setItem('comments', JSON.stringify(comments));
   renderComment();
-}
-
-
+};
