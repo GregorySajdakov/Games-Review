@@ -21,11 +21,14 @@ renderExistingComments();
 function renderExistingComments() {
   comments.forEach((comment, index) => {
     const html = `
-    <div>
-      <h3>${comment.user}</h3>
-      <button data-index="${index}" class="js-delete">Delete</button>
-    </div>    
-    <p>${comment.comment}</p>
+    <div class="comment">
+      <div>
+        <h3>${comment.user}</h3>
+        <button data-index="${index}" class="js-delete">Delete</button>
+      </div>    
+      <p>${comment.comment}</p>
+      <button class="answer">Answer</button>
+    </div>
     `;
 
     commentsContainer.innerHTML += html;
@@ -62,11 +65,14 @@ function renderComment() {
 
   comments.forEach((comment, index) => {
     const html = `
-    <div>
-      <h3>${comment.user}</h3>
-      <button data-index="${index}" class="js-delete">Delete</button>
-    </div>    
-    <p>${comment.comment}</p>
+    <div class="comment">
+      <div>
+        <h3>${comment.user}</h3>
+        <button data-index="${index}" class="js-delete">Delete</button>
+      </div>    
+      <p>${comment.comment}</p>
+      <button class="answer">Answer</button>
+    </div>
     `;
 
     commentsContainer.innerHTML += html;
