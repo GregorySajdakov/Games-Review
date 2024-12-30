@@ -80,28 +80,30 @@
       <input type="text" placeholder="Your username" class="js-username">
       <textarea rows="10" name="Comment" id="Comment-area" placeholder="Write your comment..." class="js-comment"></textarea>
     </div>
-    <button class="js-addComment">Comment</button>
+    <button class="js-add-comment">Comment</button>
 
     <div class="comments-container js-comments">
 
-      <div class="comment">
-        <div>
-          <h3>User</h3>
-          <button data-index="${index}" class="js-delete">Delete</button>
-        </div>    
-        <p>Comment</p>
-        <button class="answer">Answer</button>
-      </div>
-
-      <div class="comment-response-container">
-        <div>
-          <h3>User response</h3>
-          <button class="delete-response">Delete</button>
+      <!--
+        <div data-index="" class="comment">
+          <div>
+            <h3>Username</h3>
+            <button class="js-delete">Delete</button>
+          </div> 
+          <p>Comment</p>
+          <button class="answer">Answer</button>
         </div>
-        <p>Comment response</p>
-        <button class="answer">Answer</button>
-      </div>
-      
+
+        <div data-index="" class="comment-response-container">
+          <div>
+            <h3>Username response</h3>
+            <button class="js-delete-response">Delete</button>
+          </div>
+          <p>Comment response</p>
+          <button class="js-answer">Answer</button>
+        </div>
+      -->
+
     </div>
   </section>
   <script src="Scripts/comments.js"></script>

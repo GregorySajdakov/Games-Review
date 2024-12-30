@@ -59,8 +59,9 @@ section h2{
 
 section div input{
   width: 30%;
-  padding: 0.3rem;
-  margin-bottom: 1rem;
+  padding: 0.3em;
+  margin-bottom: 1em;
+  margin-top: 1em;
 }
 
 section div textarea{
@@ -84,9 +85,15 @@ section button{
   display: flex;
   flex-direction: column;
   margin-bottom: 2em;
+  border: 6px solid var(--third-clr);
+  padding: 1em 5em 1em 1em;
 }
 
-.comment div{
+.comments-container .comment:first-child{
+  margin-top: 5em;
+}
+
+.comment > div:not(:has(div)){
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -98,15 +105,25 @@ section button{
   margin: 0;
 }
 
+.comment p{
+  white-space: normal;
+  word-wrap: break-word;
+}
+
 /* Comments Response */
 .comment-response-container{
   width: 100%;
   display: flex;
   flex-direction: column;
   margin-left: 1em;
-  margin-bottom: 2em;
-  padding-left: 1em;
-  border-left: solid 1px var(--secondary-clr-font);
+  margin-top: 2em;
+  padding: 1em;
+  border-left: 3px solid var(--third-clr);
+}
+
+.comment-response-container p{
+  white-space: normal;
+  word-wrap: break-word;
 }
 
 .comment-response-container div:first-of-type{
@@ -115,6 +132,13 @@ section button{
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+}
+
+.js-delete,
+.js-cancel,
+.js-delete-response{
+  margin-left: auto;
+  margin-right: 1em;
 }
 
 /* Responsiveness */
