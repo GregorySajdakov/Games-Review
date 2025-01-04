@@ -31,3 +31,55 @@ button{
   font-weight: bold;
   cursor: pointer;
 }
+
+/* Warning */
+.warning-background{
+  background-color: rgba(0, 0, 0, 50%);
+  position: fixed;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.warning{
+  position: relative;
+  border: 4px solid var(--third-clr);
+  background-color: var(--bg-clr);
+  width: 30vw;
+  font-size: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.warning button{
+  position: absolute;
+  top: 0.5em;
+  left: 0.5em;
+  font-size: 2rem;
+  color: var(--secondary-clr-font);
+  background-color: unset;
+}
+
+.warning button:hover{
+  cursor: pointer;
+}
+
+.warning p{
+  max-width: 90%;
+  word-wrap: break-word;
+}
+
+.warning p:first-of-type{
+  color: var(--secondary-clr-font);
+  font-weight: bold;
+}
+
+.warning p:nth-of-type(2){
+  font-size: 1.7rem;
+}

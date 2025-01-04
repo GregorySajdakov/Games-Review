@@ -1,3 +1,6 @@
+import { warning, deleteWarning } from "./warning.js";
+
+
 // Targetting
 const buttonAddComment = document.querySelector('.js-add-comment');
 const userName = document.querySelector('.js-username');
@@ -14,7 +17,7 @@ let responses = JSON.parse(localStorage.getItem(responseID)) || [];
 
 renderComments();
 renderExistingReponses();
-console.log(responses, 'responses array');
+checkButton();
 
 function addCommentToArray() {
 
@@ -22,8 +25,11 @@ function addCommentToArray() {
   const comment = userComment.value.trim();
 
   if(!user || !comment) {
-    alert('Please fill both inputs')
-    return;
+    warning('Please fill both inputs');
+    return false;
+  }else if(user.length > 20) {
+    warning('Max user length is 20 characters');
+    return false;
   };
 
   comments.push({
@@ -32,6 +38,8 @@ function addCommentToArray() {
   });
 
   localStorage.setItem(commentID, JSON.stringify(comments));
+
+  return true;
 };
 
 function renderComments() {
@@ -52,13 +60,11 @@ function renderComments() {
 
     commentsContainer.insertAdjacentHTML('beforeend', html);
   });
-  console.log(comments); // Debugging
 };
 
 function deleteComment(index) {
   comments.splice(index, 1);
   responses = responses.filter(response => response.commentIndex !== index);
-  console.log(responses, 'responses array'); // Debugging
 
   responses = responses.map(response => {
     if(response.commentIndex > index) {
@@ -73,13 +79,16 @@ function deleteComment(index) {
 };
 
 function addRespondToArray(event) {
-  const input = document.querySelector('.js-username-response').value;
-  const textarea = document.querySelector('.js-comment-response').value;
+  const input = document.querySelector('.js-username-response').value.trim();
+  const textarea = document.querySelector('.js-comment-response').value.trim();
   const commentIndex = event.target.parentElement.parentElement.getAttribute('data-index');
 
   if(!input || !textarea) {
-    alert('Fill out both inputs :)');
-    return;
+    warning('Fill out both inputs :)');
+    return false;
+  } else if(input.length > 20) {
+    warning('Max user length is 20 characters');
+    return false;
   };
   
   responses.push({
@@ -90,7 +99,7 @@ function addRespondToArray(event) {
 
   localStorage.setItem(responseID,JSON.stringify(responses));
 
-  console.log(responses, 'responses array'); // Debugging
+  return true;
 };
 
 function renderResponses(event) {
@@ -135,6 +144,8 @@ function renderResponses(event) {
     if(buttonElDel) buttonElDel.remove();
     if(parentDiv) parentDiv.remove();
     };
+
+    targettedComment.querySelector('.answer').style.display = 'block';
 };
 
 function renderExistingReponses() {
@@ -168,47 +179,55 @@ function deleteResponse(event) {
 
   responses.splice(indexComment, 1);
   localStorage.setItem(responseID, JSON.stringify(responses));
-
-  console.log(indexComment); // Debugging
-  console.log(responses, 'responses container'); // Debugging
 };
 
-function deleteResponseInputs() {
-  const inputEl = document.querySelector('.js-username-response');
-  const textareaEl = document.querySelector('.js-comment-response');
-  const buttonEl = document.querySelector('.js-respond');
-  const buttonElDel = document.querySelector('.js-delete-inputs');
-  const parentDiv = buttonEl.parentElement;
+function deleteResponseInputs(event) {
+  const buttonElDel = event.target;
+  const parentDiv = buttonElDel.parentElement.parentElement;
+  const inputEl = parentDiv.querySelector('.js-username-response');
+  const textareaEl = parentDiv.querySelector('.js-comment-response');
+  const buttonEl = parentDiv.querySelector('.js-respond');
 
+  parentDiv.querySelector('.answer').style.display = 'block';
+
+  if(buttonElDel) buttonElDel.remove();
   if(inputEl) inputEl.remove();
   if(textareaEl) textareaEl.remove();
   if(buttonEl) buttonEl.remove();
-  if(buttonElDel) buttonElDel.remove();
-  if(parentDiv) parentDiv.remove();
 };
 
 let isEditOn = false;
 function editCommentOrResponse(event) {
   if(isEditOn) {
-    alert('Fill or cancel already existing edit');
+    warning('Fill or cancel already existing edit');
     return;
   };
 
+  const existingInputEdit = commentsContainer.querySelector('input');
+  const existingTextareaEdit = commentsContainer.querySelector('textarea');
+
+  if(existingInputEdit || existingTextareaEdit) {
+    warning('Please complete or cancel existing inputs');
+    return
+  }
+
   const container = event.target.parentElement.parentElement;
+
   const defaultUser = container.querySelector('h3');
   const defaultCommentOrResponse = container.querySelector('p');
+
   const deleteBtn = container.querySelector('.js-delete, .js-delete-response');
   const editBtn = event.target;
+
   const originalUser = defaultUser.textContent;
   const originalText = defaultCommentOrResponse.textContent;
 
   container.setAttribute('data-originalUser', originalUser);
   container.setAttribute('data-originalText', originalText);
   
-  if(container.querySelector('.answer')) {
-    const answerBtn = container.querySelector('.answer');
-    answerBtn.style.display = 'none';
-  };
+  // if(container.querySelector('.answer')) {
+  //   container.querySelector('.answer').innerHTML = 'none';
+  // };
 
   const acceptBtn = document.createElement('button');
   acceptBtn.innerHTML = 'Accept';
@@ -276,6 +295,16 @@ function acceptEdit(event) {
   const index = container.getAttribute('data-index');
   const cancelBtn = container.querySelector('.js-cancel');
 
+  if(input.value.length > 20) {
+    warning('Max user length is 20 characters');
+    return;
+  }
+
+  if(container.querySelector('.answer')) {
+    const answerBtn = container.querySelector('.answer');
+    answerBtn.style.display = 'block';
+  };
+
   if(container.classList.contains('comment')) {
     comments[index].user = input.value;
     comments[index].comment = textarea.value;
@@ -287,8 +316,6 @@ function acceptEdit(event) {
     acceptBtn.classList = 'js-edit';
 
     localStorage.setItem(commentID, JSON.stringify(comments));
-
-    console.log(comments, 'sprawdź czy się zmieniło, komentarz'); // Debugging
   };
 
   if(container.classList.contains('comment-response-container')) {
@@ -302,8 +329,6 @@ function acceptEdit(event) {
     acceptBtn.classList = 'js-edit';
     
     localStorage.setItem(responseID, JSON.stringify(responses));
-
-    console.log(responses, 'działa? responses');
   };
 
   if(container.classList.contains('comment-response-container')) {
@@ -314,17 +339,45 @@ function acceptEdit(event) {
     cancelBtn.innerHTML = 'Delete';
   };
 
+  // if(container.parentElement.querySelector('.answer').style.display = 'none') {
+  // } else {
+  //   container.parentElement.querySelector('.answer').style.display = 'block';
+  // };
+
   isEditOn = false;
 };
 
+function checkButton() {  // If there is more than 1 response, move button
+  commentsContainer.querySelectorAll('.comment').forEach(comment => {
+    const response = comment.querySelectorAll('.comment-response-container');
+    const button = comment.querySelector('.answer');
+
+    if(button.style.display = 'none') {
+      button.style.display = 'block';
+    }
+
+    if(response.length >= 1) {
+      button.style.marginTop = '2em';
+      button.innerHTML = 'Continue Thread';
+      comment.appendChild(button);
+    } else if(response.length < 1) {
+    button.style.marginTop = '0';
+    button.innerHTML = 'Answer';
+    };
+
+  });
+};
+
 buttonAddComment.addEventListener('click', () => {
-    addCommentToArray();
+    if(!addCommentToArray()) {
+      return;
+    };
     userName.value = '';
     userComment.value = '';
     renderComments();
     renderExistingReponses();
-    
-    console.log(comments); // Debugging
+
+    checkButton();
 });
 
 commentsContainer.addEventListener('click', event => {
@@ -333,9 +386,9 @@ commentsContainer.addEventListener('click', event => {
     deleteComment(index);
     renderComments();
     renderExistingReponses();
+    checkButton();
 
-    console.log(responses, 'responses array'); //Debugging
-    console.log(comments); // Debugging
+    isEditOn = false;
   };
 
   if(event.target.classList.contains('answer')) {
@@ -344,7 +397,15 @@ commentsContainer.addEventListener('click', event => {
     const existingButton = document.querySelector('.js-answer');
 
     if(existingInput || existingTextarea || existingButton) {
-      alert('Please complete existing response first');
+      warning('Please complete or cancel existing inputs');
+      return;
+    };
+
+    const existingInputEdit = commentsContainer.querySelector('input');
+    const existingTextareaEdit = commentsContainer.querySelector('textarea');
+
+    if(existingInputEdit || existingTextareaEdit) {
+      warning('Please complete or cancel existing inputs');
       return;
     }
     
@@ -359,36 +420,61 @@ commentsContainer.addEventListener('click', event => {
     `
 
     button.insertAdjacentHTML('afterend', html );
+
+    button.style.display = 'none';
   };
   
   if(event.target.classList.contains('js-respond')) {
-    addRespondToArray(event);
+    if(!addRespondToArray(event)) {
+      return;
+    };
     renderResponses(event);
+    checkButton();
   };
 
   if(event.target.classList.contains('js-delete-inputs')) {
-    deleteResponseInputs();
+    deleteResponseInputs(event);
   };
 
   if(event.target.classList.contains('js-delete-response')) {
     deleteResponse(event);
     renderExistingReponses();
+    checkButton();
+
+    event.target.parentElement.parentElement.querySelector('input')?.remove();
+    event.target.parentElement.parentElement.querySelector('textarea')?.remove();
+    event.target.parentElement.parentElement.querySelector('.js-respond')?.remove();
+    event.target.parentElement.parentElement.querySelector('.js-delete-inputs')?.remove();
+
+    isEditOn = false;
   };
 
   if(event.target.classList.contains('js-edit')) {
     editCommentOrResponse(event);
+    // checkButton();
   };
 
   if(event.target.classList.contains('js-cancel')) {
     cancelEdit(event);
+    checkButton();
   };
 
   if(event.target.classList.contains('js-accept')) {
     acceptEdit(event);
+    checkButton();
   }
+});
+
+document.querySelector('body').addEventListener('click', event => {
+  if(event.target.classList.contains('js-close')) {
+    deleteWarning(event);
+  };
 });
 
 
 
-// Zrób zamiast alertu własny box oraz maksymalną ilość znaków w inpucie
+// Zrób tak żeby zawsze był dostępny tylko jeden input
+// Lub
+// Uważaj na display=none od ContinueThread/Answer
+
                   // localStorage.clear();

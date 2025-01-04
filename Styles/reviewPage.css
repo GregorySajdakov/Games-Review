@@ -85,7 +85,7 @@ section button{
   display: flex;
   flex-direction: column;
   margin-bottom: 2em;
-  border: 6px solid var(--third-clr);
+  border: 4px solid var(--third-clr);
   padding: 1em 5em 1em 1em;
 }
 
@@ -118,7 +118,7 @@ section button{
   margin-left: 1em;
   margin-top: 2em;
   padding: 1em;
-  border-left: 3px solid var(--third-clr);
+  border: 3px solid var(--third-clr);
 }
 
 .comment-response-container p{
