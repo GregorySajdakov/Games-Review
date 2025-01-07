@@ -298,6 +298,9 @@ function acceptEdit(event) {
   if(input.value.length > 20) {
     warning('Max user length is 20 characters');
     return;
+  } else if(input.value === '' || textarea.value === '') {
+    warning('Both fields must be complete');
+    return;
   }
 
   if(container.querySelector('.answer')) {
@@ -470,11 +473,5 @@ document.querySelector('body').addEventListener('click', event => {
     deleteWarning(event);
   };
 });
-
-
-
-// Zrób tak żeby zawsze był dostępny tylko jeden input
-// Lub
-// Uważaj na display=none od ContinueThread/Answer
 
                   // localStorage.clear();

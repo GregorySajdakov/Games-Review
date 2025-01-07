@@ -76,15 +76,16 @@
 
   <section>
     <h2>Comments</h2>
-    <div>
+    <div class="text-input">
       <input type="text" placeholder="Your username" class="js-username">
       <textarea rows="10" name="Comment" id="Comment-area" placeholder="Write your comment..." class="js-comment"></textarea>
     </div>
-    <button class="js-addComment">Comment</button>
+    <button class="js-add-comment">Comment</button>
 
-    <div class="comments js-comments">
+    <div class="comments-container js-comments">
     </div>
   </section>
-  <script src="Scripts/comments.js"></script>
+  <script type="module" src="Scripts/comments.js"></script>
+  <script type="module" src="Scripts/warning.js"></script>
 </body>
 </html>
