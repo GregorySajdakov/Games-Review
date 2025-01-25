@@ -2,8 +2,10 @@ export function warning(warning) {
   const html = `
   <div class="warning-background">
     <div class="warning">
-      <button class="js-close">X</button>
-      <p>WARNING</p>
+      <div>
+        <button class="js-close">X</button>
+        <p>WARNING</p>
+      </div>
       <p>${warning}</p>
     </div>
   </div>
@@ -13,5 +15,5 @@ export function warning(warning) {
 };
 
 export function deleteWarning(event) {
-  event.target.parentElement.parentElement.remove();
+  event.target.parentElement.parentElement.parentElement.remove();
 };

@@ -1,4 +1,5 @@
 import { warning, deleteWarning } from "./warning.js";
+import { getCurrentTime } from "./getTime.js";
 
 
 // Targetting
@@ -22,7 +23,8 @@ checkButton();
 function addCommentToArray() {
 
   const user = userName.value.trim();
-  const comment = userComment.value.trim();
+  const comment = userComment.value;
+  const date = getCurrentTime();
 
   if(!user || !comment) {
     warning('Please fill both inputs');
@@ -34,7 +36,8 @@ function addCommentToArray() {
 
   comments.push({
     user,
-    comment
+    comment,
+    date
   });
 
   localStorage.setItem(commentID, JSON.stringify(comments));
@@ -54,6 +57,7 @@ function renderComments() {
           <button class="js-edit">Edit</button>
         </div>    
         <p>${comment.comment}</p>
+        <p class="current-date">${comment.date}</p>
         <button class="answer">Answer</button>
       </div>
     `;
@@ -80,8 +84,9 @@ function deleteComment(index) {
 
 function addRespondToArray(event) {
   const input = document.querySelector('.js-username-response').value.trim();
-  const textarea = document.querySelector('.js-comment-response').value.trim();
+  const textarea = document.querySelector('.js-comment-response').value;
   const commentIndex = event.target.parentElement.parentElement.getAttribute('data-index');
+  const date = getCurrentTime();
 
   if(!input || !textarea) {
     warning('Fill out both inputs :)');
@@ -94,6 +99,7 @@ function addRespondToArray(event) {
   responses.push({
     input,
     textarea,
+    date,
     commentIndex
   });
 
@@ -109,7 +115,7 @@ function renderResponses(event) {
 
   targettedComment.querySelectorAll('.comment-response-container').forEach(element => {
     element.remove();
-  }); // Same as innerHTML = '';
+  });
 
   newArray.forEach((response) => {
     const originalIndex = responses.findIndex(ogRespon => ogRespon.input === response.input 
@@ -123,6 +129,7 @@ function renderResponses(event) {
         <button class="js-edit">Edit</button>
       </div>
       <p>${response.textarea}</p>
+      <p class="current-date">${response.date}</p>
     </div>
     `;
     targettedComment.insertAdjacentHTML('beforeend', html);
@@ -167,6 +174,7 @@ function renderExistingReponses() {
           <button class="js-edit">Edit</button>
         </div>
         <p>${response.textarea}</p>
+        <p>${response.date}</p>
       </div>
       `;
       comment.insertAdjacentHTML('beforeend', html);
@@ -225,10 +233,6 @@ function editCommentOrResponse(event) {
   container.setAttribute('data-originalUser', originalUser);
   container.setAttribute('data-originalText', originalText);
   
-  // if(container.querySelector('.answer')) {
-  //   container.querySelector('.answer').innerHTML = 'none';
-  // };
-
   const acceptBtn = document.createElement('button');
   acceptBtn.innerHTML = 'Accept';
   acceptBtn.classList = 'js-accept';
@@ -294,6 +298,7 @@ function acceptEdit(event) {
   const textarea = container.querySelector('textarea');
   const index = container.getAttribute('data-index');
   const cancelBtn = container.querySelector('.js-cancel');
+  const currentDate = container.querySelector('.current-date');
 
   if(input.value.length > 20) {
     warning('Max user length is 20 characters');
@@ -341,12 +346,7 @@ function acceptEdit(event) {
     cancelBtn.classList = 'js-delete';
     cancelBtn.innerHTML = 'Delete';
   };
-
-  // if(container.parentElement.querySelector('.answer').style.display = 'none') {
-  // } else {
-  //   container.parentElement.querySelector('.answer').style.display = 'block';
-  // };
-
+  
   isEditOn = false;
 };
 
@@ -454,7 +454,6 @@ commentsContainer.addEventListener('click', event => {
 
   if(event.target.classList.contains('js-edit')) {
     editCommentOrResponse(event);
-    // checkButton();
   };
 
   if(event.target.classList.contains('js-cancel')) {

@@ -1,3 +1,15 @@
+body{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  row-gap: 5em;
+}
+
+button{
+  font-size: 3rem;
+}
+
 /* Header */
 header{
   display: flex;
@@ -10,14 +22,11 @@ header{
 header h1{
   font-size: 3rem;
   text-align: center;
-  /* background-color: var(--bg-clr);
-  border-radius: 50px;
-  padding: 2px 50px 10px 50px; */
 }
 
 header h2{
   font-size: 150%;
-  color: var(--primary-clr-font);
+  color: var(--white);
   text-align: center;
 }
 
@@ -78,6 +87,10 @@ main div p{
     bottom: 10%;
     left: 4%;
     font-size: 70%;
+  }
+
+  button{
+    font-size: 2rem;
   }
 }
 
